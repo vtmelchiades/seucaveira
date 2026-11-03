@@ -36,40 +36,51 @@ export default function Services() {
   const { ref } = useGSAPContext((self) => {
     const track = trackRef.current;
     if (!track || REDUCE) return;
-    const getDist = () => track.scrollWidth - window.innerWidth + 32;
-    const tween = gsap.to(track, {
-      x: () => -getDist(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#servicos",
-        start: "top top",
-        end: () => "+=" + getDist(),
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-      },
-    });
     // internal entrances: one-shot play (never reverse — QA rule: reverse-on-leave
     // hides copy mid-view; also must fire for the panel already on stage at pin start)
-    PANELS.forEach((_, i) => {
-      const el = track.children[i] as HTMLElement | undefined;
-      if (!el) return;
-      gsap.fromTo(
-        el.querySelectorAll("[data-in]"),
-        { y: 44, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.08,
-          immediateRender: i !== 0,
-          scrollTrigger: {
-            trigger: el, containerAnimation: tween,
-            start: "left 96%", once: true, toggleActions: "play none none none",
+    const entrances = (containerAnimation?: gsap.core.Tween) => {
+      PANELS.forEach((_, i) => {
+        const el = track.children[i] as HTMLElement | undefined;
+        if (!el) return;
+        gsap.fromTo(
+          el.querySelectorAll("[data-in]"),
+          { y: 44, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.08,
+            immediateRender: i !== 0,
+            scrollTrigger: containerAnimation
+              ? { trigger: el, containerAnimation, start: "left 96%", once: true, toggleActions: "play none none none" }
+              : { trigger: el, start: "top 88%", once: true },
           },
+        );
+        if (i === 0) gsap.set(el.querySelectorAll("[data-in]"), { y: 0, opacity: 1 });
+      });
+    };
+    // the pinned horizontal chapter is a desktop-only affair; phones stack
+    // the panels vertically with plain entrances (CSS mirrors at 1020px).
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1020px)", () => {
+      const getDist = () => track.scrollWidth - window.innerWidth + 32;
+      const tween = gsap.to(track, {
+        x: () => -getDist(),
+        ease: "none",
+        scrollTrigger: {
+          // element, not selector: gsap.context scopes selector strings to the
+          // subtree, and "#servicos" is an ancestor of this context root.
+          trigger: document.getElementById("servicos"),
+          start: "top top",
+          end: () => "+=" + getDist(),
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
         },
-      );
-      if (i === 0) gsap.set(el.querySelectorAll("[data-in]"), { y: 0, opacity: 1 });
+      });
+      entrances(tween);
+      return () => { tween.scrollTrigger?.kill(); tween.kill(); };
     });
-    self.add(() => { tween.scrollTrigger?.kill(); tween.kill(); });
+    mm.add("(max-width: 1019px)", () => entrances());
+    self.add(() => () => mm.revert());
   });
 
   return (

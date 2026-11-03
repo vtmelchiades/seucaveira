@@ -1,0 +1,14 @@
+{
+ "url": "http://localhost:4173",
+ "mobile": true,
+ "info": {
+  "webgl": false,
+  "height": 10992,
+  "booted": "true",
+  "bootGone": true,
+  "overflowX": false
+ },
+ "errors": [],
+ "shaderWarns": [],
+ "failed": []
+}

@@ -122,17 +122,20 @@ svg {
 }
 
 .h-hero {
-  font-size: clamp(3rem, 10.9vw, 150px);
+  font-size: clamp(2.3rem, 9.4vw, 150px);
 }
-.h-claim {
-  font-size: clamp(1.75rem, 4.3vw, 4rem);
-  line-height: 0.94;
-}
+
 .h-sec {
   font-size: clamp(2.2rem, 6.4vw, 6rem);
 }
 .h-min {
   font-size: clamp(1.6rem, 4.2vw, 3.4rem);
+}
+
+
+.h-claim {
+  font-size: clamp(1.7rem, 3.6vw, 3.05rem);
+  line-height: 0.94;
 }
 
 .kicker {
@@ -305,6 +308,17 @@ svg {
   border: 1px solid currentColor;
   padding: 0.6rem 0.95rem;
   opacity: 1;
+  white-space: nowrap;
+}
+@media (max-width: 520px) {
+  .nav-links .nav-cta {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+  .brand {
+    font-size: 0.8rem;
+  }
 }
 .nav-links .nav-cta::after {
   display: none;
@@ -624,7 +638,16 @@ svg {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: var(--gutter);
-  padding-block: clamp(2rem, 4.5vh, 3.2rem) clamp(2.2rem, 4.5vh, 3rem);
+  padding-block: clamp(1.6rem, 4.5vh, 3.2rem) clamp(2.2rem, 4.5vh, 3rem);
+}
+@media (max-width: 900px) {
+  .hero__row {
+    grid-template-columns: 1fr;
+  }
+  .hero__ctas .btn {
+    padding: 0.8rem 1rem;
+    font-size: 0.7rem;
+  }
 }
 .hero__sub {
   max-width: 34ch;
@@ -703,9 +726,22 @@ svg {
 
 .reel__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.55fr);
+  gap: clamp(2rem, 4.5vw, 4.5rem);
   align-items: center;
+}
+@media (min-width: 1020px) {
+  #reel.band {
+    height: 100svh;
+    display: grid;
+    align-items: center;
+    padding-block: calc(var(--h-nav) + 1.4rem) 1.4rem;
+    overflow: hidden;
+  }
+}
+#reel .grade__tag {
+  top: 3.3rem;
+  bottom: auto;
 }
 @media (max-width: 1020px) {
   .reel__grid {
@@ -816,6 +852,7 @@ svg {
   position: absolute;
   bottom: 0.9rem;
   z-index: 4;
+  max-width: 44%;
   font: 500 0.66rem/1 var(--f-ui);
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -1274,6 +1311,7 @@ html:not(.fonts-ready) .h-hero {
 .contact__note {
   color: var(--dim);
   font-size: 0.92rem;
+  margin: 1.6rem 0 0;
 }
 .contact__brief {
   border: 1px solid var(--line-2);
@@ -1472,4 +1510,11 @@ html:not([data-booted="true"]) {
 }
 .grade__tag {
   transition: opacity 0.18s var(--ease-micro-css), filter 0.18s;
+}
+
+/* — mobile: the scroll cue competes with the stacked CTAs — */
+@media (max-width: 900px) {
+  .hero__cue {
+    display: none;
+  }
 }

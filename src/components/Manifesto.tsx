@@ -28,7 +28,7 @@ export default function Manifesto() {
         scrollTrigger: { trigger: ".manifesto__text", start: "top 90%", once: true },
       },
     );
-    self.add(() => { st.scrollTrigger?.kill(); count.scrollTrigger?.kill(); });
+    self.add(() => () => { st.scrollTrigger?.kill(); count.scrollTrigger?.kill(); });
   });
 
   return (

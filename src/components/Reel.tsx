@@ -14,10 +14,12 @@ export default function Reel({ webgl }: { webgl: boolean }) {
   const manual = useRef(false);
   const { ref } = useGSAPContext((self) => {
     if (REDUCE) return;
+    // NOTE: pass the element, not a selector — gsap.context scopes selector
+    // strings to the ref subtree, and "#reel" is the subtree ROOT itself.
     const g = ScrollTrigger.create({
-      trigger: ".reel__pin",
+      trigger: document.getElementById("reel"),
       start: "top top",
-      end: "+=160%",
+      end: "+=150%",
       pin: true,
       anticipatePin: 1,
       onUpdate: (st) => {
@@ -28,7 +30,7 @@ export default function Reel({ webgl }: { webgl: boolean }) {
         setReveal(0.06 + v * 0.88);
       },
     });
-    self.add(() => g.kill());
+    self.add(() => () => g.kill());
     gsap.from(".reel__copy > *", {
       y: 44, opacity: 0, duration: 0.85, ease: "power3.out", stagger: 0.08,
       scrollTrigger: { trigger: ".reel__copy", start: "top 86%", once: true },
@@ -58,7 +60,7 @@ export default function Reel({ webgl }: { webgl: boolean }) {
         <div className="reel__grid">
           <div className="reel__copy">
             <span className="sec-label">O reel</span>
-            <h2 className="display h-sec h-claim">Nosso reel não pede licença. Pede replay.</h2>
+            <h2 className="display h-claim">Nosso reel não pede licença. Pede replay.</h2>
             <p className="lede">
               Cor é argumento. A mesma cena, dos dois lados da nossa mesa —
               arraste a linha e veja o plano cru virar filme.

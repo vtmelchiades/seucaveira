@@ -42,7 +42,7 @@ export default function Process() {
       });
     };
     if (REDUCE) update(1);
-    self.add(() => {
+    self.add(() => () => {
       st.kill();
       removeEventListener("resize", measure);
     });
