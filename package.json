@@ -1,0 +1,48 @@
+{
+  "name": "seucaveira-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5173 --strictPort",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173 --strictPort"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vtmelchiades/seucaveira.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vtmelchiades/seucaveira/issues"
+  },
+  "homepage": "https://github.com/vtmelchiades/seucaveira#readme",
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "@react-three/postprocessing": "^3.2.2",
+    "@types/three": "^0.187.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27",
+    "maath": "^0.10.8",
+    "postprocessing": "^6.39.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vite-plugin-glsl": "^1.6.2"
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
+  }
+}
